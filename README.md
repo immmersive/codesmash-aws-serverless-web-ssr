@@ -1,4 +1,4 @@
-# CodeSmash AWS Serverless Web Server SSR Terraform Module
+# CodeSmash AWS Serverless Web Server SSR
 
 Module ID: codesmash-aws-serverless-web-ssr
 
