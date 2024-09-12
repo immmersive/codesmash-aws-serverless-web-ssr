@@ -1,9 +1,14 @@
-provider "aws" {  
-    region     = "us-east-1"
+provider "aws" {
+    region     = "us-east-2"
     access_key = ""
     secret_key = ""
 }
- 
+
+data "aws_s3_object" "lambda_zip" {
+  bucket = "codesmash-aws-serverless-web-ssr"
+  key    = "lambda.zip"
+}
+
 resource "aws_lambda_function" "lambda" {
   function_name = "nextjs-ssr-function"
   role          = aws_iam_role.role.arn
@@ -13,8 +18,10 @@ resource "aws_lambda_function" "lambda" {
   runtime       = "nodejs20.x"
   architectures = ["x86_64"]
 
-  s3_bucket = "this-is-for-nextjs-ssr" 
-  s3_key    = "lambda.zip" 
+  s3_bucket = "codesmash-aws-serverless-web-ssr"
+  s3_key    = "lambda.zip"
+
+  source_code_hash = data.aws_s3_object.lambda_zip.etag
 
 
   environment {
@@ -27,6 +34,6 @@ resource "aws_lambda_function" "lambda" {
   }
 
   layers = [
-    "arn:aws:lambda:us-east-1:753240598075:layer:LambdaAdapterLayerX86:23"
-  ] 
-} 
+    "arn:aws:lambda:us-east-2:753240598075:layer:LambdaAdapterLayerX86:23"
+  ]
+}
