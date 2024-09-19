@@ -17,6 +17,7 @@ resource "aws_lambda_function" "lambda" {
   handler       = "run.sh"
   runtime       = "nodejs20.x"
   architectures = ["x86_64"]
+  publish       = true
 
   s3_bucket = "codesmash-aws-serverless-web"
   s3_key    = "lambda.zip"
