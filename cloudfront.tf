@@ -43,12 +43,6 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
     min_ttl                 = 0
     max_ttl                 = 0
     compress                = true
-
-    lambda_function_association {
-        event_type   = "origin-request"
-        lambda_arn   = aws_lambda_function.lambda.qualified_arn
-        include_body = false
-    }
   }
 
   ordered_cache_behavior {
@@ -70,12 +64,6 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
     min_ttl                 = 0
     max_ttl                 = 31536000
     compress                = true
-
-    lambda_function_association {
-        event_type   = "origin-request"
-        lambda_arn   = aws_lambda_function.lambda.qualified_arn
-        include_body = false
-    }
   }
 
   price_class = "PriceClass_All"
