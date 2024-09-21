@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 data "aws_s3_object" "lambda_zip" {
-  bucket = "codesmash-aws-serverless-web"
+  bucket = aws_s3_bucket.s3_web.bucket
   key    = "lambda.zip"
 }
 
@@ -19,7 +19,7 @@ resource "aws_lambda_function" "lambda" {
   architectures = ["x86_64"]
   publish       = true
 
-  s3_bucket = "codesmash-aws-serverless-web"
+  s3_bucket = aws_s3_bucket.s3_web.bucket
   s3_key    = "lambda.zip"
 
   source_code_hash = data.aws_s3_object.lambda_zip.etag
