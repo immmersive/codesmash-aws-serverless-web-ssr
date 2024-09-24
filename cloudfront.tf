@@ -1,7 +1,6 @@
 resource "aws_cloudfront_distribution" "cloudfront_web" {
     enabled                 = true
     is_ipv6_enabled         = true
-    default_root_object     = "index.html"
 
     viewer_certificate {
         cloudfront_default_certificate = true
@@ -9,6 +8,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
 
     origin {
         domain_name = "q0uwripz4k.execute-api.us-east-1.amazonaws.com"
+        origin_path = "/api"
         origin_id   = "origin_1"
 
         custom_origin_config {
@@ -21,6 +21,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
 
     origin {
         domain_name = "${aws_s3_bucket.s3_web.bucket_regional_domain_name}"
+        origin_path = "/_next"
         origin_id   = "origin_2"
         origin_access_control_id = aws_cloudfront_origin_access_control.web_access_control.id
     }
@@ -46,7 +47,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
   }
 
   ordered_cache_behavior {
-      path_pattern     = "/*"
+      path_pattern     = "/static/*"
       allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
       cached_methods   = ["GET", "HEAD"]
       target_origin_id = "origin_2"
