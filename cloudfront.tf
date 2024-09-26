@@ -32,7 +32,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
         target_origin_id = "origin_1"
 
     forwarded_values {
-        query_string = false
+        query_string = true
 
     cookies {
         forward = "none"
