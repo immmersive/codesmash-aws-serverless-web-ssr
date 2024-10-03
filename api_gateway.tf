@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "api_gateway" {
-  name        = "ssr-api"
+  name        = "${var.app_name}-${terraform.workspace}-api"
 }
 
 resource "aws_api_gateway_resource" "proxy" {

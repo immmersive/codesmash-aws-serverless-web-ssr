@@ -1,15 +1,15 @@
 resource "aws_iam_policy" "policy" {
-    name            = "ssr-policy"
-    description     = "ssr-policy"
+    name            = "${var.app_name}_${terraform.workspace}"
+    description     = "${var.app_name}_${terraform.workspace}"
 
   policy = <<EOF
 {
     "Version": "2012-10-17",
-    "Statement": 
+    "Statement":
     [
         {
             "Action": "*",
-            "Effect": "Allow",            
+            "Effect": "Allow",
             "Resource": "*"
         }
     ]
