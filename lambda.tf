@@ -1,8 +1,3 @@
-data "aws_s3_object" "lambda_zip" {
-  bucket = aws_s3_bucket.s3_web.bucket
-  key    = "lambda.zip"
-}
-
 resource "aws_lambda_function" "lambda" {
   function_name = "${var.app_name}_${terraform.workspace}"
   role          = aws_iam_role.role.arn
@@ -17,8 +12,7 @@ resource "aws_lambda_function" "lambda" {
   s3_key    = "lambda.zip"
 
   source_code_hash = data.aws_s3_object.lambda_zip.etag
-
-
+ 
   environment {
     variables = {
       AWS_LAMBDA_EXEC_WRAPPER  = "/opt/bootstrap"

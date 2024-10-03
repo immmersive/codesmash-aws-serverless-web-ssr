@@ -1,4 +1,7 @@
 resource "aws_cloudfront_distribution" "cloudfront_web" {
+
+    depends_on = [aws_api_gateway_deployment.api_gateway]
+    
     enabled                 = true
     is_ipv6_enabled         = true
 
