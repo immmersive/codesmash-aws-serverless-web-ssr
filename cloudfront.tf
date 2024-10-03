@@ -7,7 +7,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
     }
 
     origin {
-        domain_name = "q0uwripz4k.execute-api.us-east-1.amazonaws.com"
+        domain_name = "${aws_api_gateway_rest_api.api_gateway.id}.execute-api.${var.region}.amazonaws.com"
         origin_path = "/api"
         origin_id   = "origin_1"
 
