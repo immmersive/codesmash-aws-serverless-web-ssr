@@ -12,7 +12,7 @@ resource "aws_lambda_function" "lambda" {
   s3_key    = "lambda.zip"
 
   source_code_hash = data.aws_s3_object.lambda_zip.etag
- 
+
   environment {
     variables = {
       AWS_LAMBDA_EXEC_WRAPPER  = "/opt/bootstrap"
@@ -23,6 +23,6 @@ resource "aws_lambda_function" "lambda" {
   }
 
   layers = [
-    "arn:aws:lambda:us-east-1:753240598075:layer:LambdaAdapterLayerX86:23"
+    "arn:aws:lambda:${var.region}:753240598075:layer:LambdaAdapterLayerX86:23"
   ]
 }
