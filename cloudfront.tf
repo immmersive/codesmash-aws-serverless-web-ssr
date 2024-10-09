@@ -23,8 +23,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
     }
 
     origin {
-        domain_name = "${aws_s3_bucket.s3_web.bucket_regional_domain_name}"
-        origin_path = "/_next"
+        domain_name = "${aws_s3_bucket.s3_web.bucket_regional_domain_name}" 
         origin_id   = "origin_2"
         origin_access_control_id = aws_cloudfront_origin_access_control.web_access_control.id
     }
@@ -50,8 +49,8 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
   }
 
   ordered_cache_behavior {
-      path_pattern     = "/static/*"
-      allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+      path_pattern     = "/_next/static/*"
+      allowed_methods  = ["GET", "HEAD"]
       cached_methods   = ["GET", "HEAD"]
       target_origin_id = "origin_2"
 
