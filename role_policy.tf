@@ -12,7 +12,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
       {
         Effect = "Allow",
         Action = "lambda:GetLayerVersion",
-        Resource = "arn:aws:lambda:us-east-1:753240598075:layer:LambdaAdapterLayerX86:23"
+        Resource = "arn:aws:lambda:${var.region}:753240598075:layer:LambdaAdapterLayerX86:23"
       }
     ]
   })
