@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
     }
 
     origin {
-        domain_name = "813m5l1wqf.execute-api.us-east-1.amazonaws.com" 
+        domain_name = "${var.api}" 
         origin_id   = "origin_3"
 
         custom_origin_config {
