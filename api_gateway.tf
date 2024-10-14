@@ -49,7 +49,7 @@ resource "aws_api_gateway_deployment" "api_gateway" {
   ]
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  stage_name  = "api"
+  stage_name  = "app"
 }
 
 resource "aws_lambda_permission" "permission" {
