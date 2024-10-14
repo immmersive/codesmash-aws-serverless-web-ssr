@@ -5,3 +5,7 @@ variable "app_name" {
 variable "region" {
   default = ""
 }
+
+variable "api" {
+  default = ""
+}
