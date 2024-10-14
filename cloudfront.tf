@@ -11,7 +11,7 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
 
     origin {
         domain_name = "${aws_api_gateway_rest_api.api_gateway.id}.execute-api.${var.region}.amazonaws.com"
-        origin_path = "/api"
+        origin_path = "/app"
         origin_id   = "origin_1"
 
         custom_origin_config {
@@ -26,6 +26,18 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
         domain_name = "${aws_s3_bucket.s3_web.bucket_regional_domain_name}" 
         origin_id   = "origin_2"
         origin_access_control_id = aws_cloudfront_origin_access_control.web_access_control.id
+    }
+
+    origin {
+        domain_name = "813m5l1wqf.execute-api.us-east-1.amazonaws.com" 
+        origin_id   = "origin_3"
+
+        custom_origin_config {
+          http_port              = 80
+          https_port             = 443
+          origin_protocol_policy = "https-only"
+          origin_ssl_protocols   = ["TLSv1.2"]
+        }
     }
 
     default_cache_behavior {
@@ -66,6 +78,28 @@ resource "aws_cloudfront_distribution" "cloudfront_web" {
     default_ttl             = 86400
     min_ttl                 = 0
     max_ttl                 = 31536000
+    compress                = true
+  }
+
+    ordered_cache_behavior {
+        path_pattern     = "/api/*"
+        allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+        cached_methods   = ["GET", "HEAD"]
+        target_origin_id = "origin_3"
+
+    forwarded_values {
+        query_string = true
+        headers = ["Origin", "Access-Control-Request-Headers", "Access-Control-Request-Method"]
+
+    cookies {
+        forward = "none"
+      }
+    }
+
+    viewer_protocol_policy  = "redirect-to-https"
+    default_ttl             = 0
+    min_ttl                 = 0
+    max_ttl                 = 0
     compress                = true
   }
 
